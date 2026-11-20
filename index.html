@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Feedback — The Visible Bible</title>
+<style>
+body{margin:0;background:#f6efe0;color:#1d1a14;font:16px/1.55 system-ui,sans-serif}
+main{max-width:560px;margin:0 auto;padding:28px 18px}
+h1{font:600 2rem Georgia,serif;color:#17295c;margin:.2em 0}
+p{margin:.4em 0 1em}a{color:#17295c}
+label{display:block;font-weight:600;margin:14px 0 4px}
+input,textarea{width:100%;box-sizing:border-box;font:inherit;padding:10px;border:1px solid #c9b98f;border-radius:8px;background:#fffdf7}
+.h{position:absolute;left:-9999px}
+button{margin-top:16px;padding:11px 22px;font:600 1rem system-ui;color:#fff;background:#17295c;border:0;border-radius:8px}
+button:disabled{opacity:.6}#s{margin-left:12px;color:#8a5a44}
+</style></head><body><main>
+<a href="https://claude.ai/artifact/3fB62nwYqr2tXoeSjKUmT1">← The Visible Bible</a>
+<h1>Send feedback</h1>
+<p>What works, what's missing, or something that looks wrong? Your message goes straight to the site's author.</p>
+<form id="f" novalidate>
+<label for="n">Name (optional)</label><input id="n" maxlength="120" autocomplete="name">
+<label for="e">Email (only if you'd like a reply)</label><input id="e" type="email" maxlength="200" autocomplete="email">
+<label for="m">Your message</label><textarea id="m" rows="7" maxlength="4000" required></textarea>
+<input id="h" class="h" tabindex="-1" autocomplete="off" aria-hidden="true">
+<button id="b">Send feedback</button><span id="s" role="status"></span>
+</form>
+<div id="t" hidden><h1>Thank you!</h1><p>Your feedback has been sent.</p><a href="https://claude.ai/artifact/3fB62nwYqr2tXoeSjKUmT1">Back to The Visible Bible</a></div>
+<script>
+f.onsubmit=async ev=>{ev.preventDefault();
+const msg=document.getElementById("m").value.trim(),em=document.getElementById("e").value.trim(),s=document.getElementById("s"),b=document.getElementById("b");
+if(!msg){s.textContent="Please write a message first.";return}
+if(em&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){s.textContent="That email doesn't look right.";return}
+if(document.getElementById("h").value){f.hidden=true;t.hidden=false;return}
+b.disabled=true;s.textContent="Sending…";
+try{const r=await fetch("https://formsubmit.co/ajax/4fd5a506c2a9b09312a0fb8f6881cef3",{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},
+body:JSON.stringify({name:document.getElementById("n").value.trim()||"(not given)",email:em||"(not given)",...(em?{_replyto:em}:{}),message:msg,sent:new Date().toISOString(),_subject:"The Visible Bible feedback",_template:"table",_captcha:"false"})});
+if(!r.ok)throw 0;f.hidden=true;t.hidden=false}catch(x){s.textContent="Couldn't send just now. Please try again."}finally{b.disabled=false}};
+</script></main></body></html>
